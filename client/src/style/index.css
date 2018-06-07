@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Do+Hyeon&subset=korean');
+
+body, html {
+	background: #f1f1f1;
+	padding: 0;
+	margin: 0;
+	min-height: 100vh;
+	box-sizing: border-box;
+	font-family:'Do Hyeon', sans-serif;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+#root {
+	min-height: 100vh;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}	

@@ -1,0 +1,30 @@
+{
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-airbnb", "tslint-config-prettier"],
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts"
+    ]
+  },
+	"rules": {
+		"import-name": false,
+		"interface-name": false,
+		"semicolon": [true, "always"],
+		"no-console": false,
+		"ter-indent": [true, "tab"],
+		"no-consecutive-blank-lines": true,
+		"object-curly-spacing": [ true, "always" ],
+		"ter-arrow-spacing": [true, { "before": true, "after": true }],
+		"eofline": false,
+		"member-access": false,
+		"no-shadowed-variable": false,
+		"no-this-assignment": false,
+		"ordered-imports": false,
+		"trailing-comma": false,
+		"no-var-requires": false,
+		"object-literal-sort-keys": false,
+		"object-shorthand-properties-first": false,
+		"variable-name": false,
+		"no-unused-expression": false
+	}
+}
