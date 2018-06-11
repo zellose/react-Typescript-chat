@@ -48,7 +48,10 @@ import {
 export const sequelize = new Sequelize('reactchat', 'postgres', POSTGRELS_PW!, {
 	dialect: 'postgres',
 	logging: false,
-	operatorsAliases
+	operatorsAliases,
+	define: {
+		
+	}
 });
 
 interface IModelSchema {

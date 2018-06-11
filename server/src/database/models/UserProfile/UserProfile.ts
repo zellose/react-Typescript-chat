@@ -12,7 +12,10 @@ type UserProfileInstance = Sequelize.Instance<UserProfileAttributes> & UserProfi
 export default (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) => {
 	const attributes: SequelizeAttributes<UserProfileAttributes> = {
 		id: primaryUUID,
-		display_name: { type: DataTypes.STRING },
+		display_name: { 
+			type: DataTypes.STRING,
+			unique: true
+		},
 		thumbnail: { 
 			type: DataTypes.STRING, 
 			defaultValue: 'https://s3.ap-northeast-2.amazonaws.com/s3.images.doren.com/marketImages/default_thumbnail.png' 

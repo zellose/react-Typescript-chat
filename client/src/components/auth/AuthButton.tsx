@@ -31,10 +31,11 @@ const Wrapper = styled.div`
 
 interface AuthButtonProps {
 	children: React.ReactNode;
+	handleClick?: () => void;
 }
 
-const AuthButton: React.SFC<AuthButtonProps> = ({ children }) => (
-	<Wrapper>
+const AuthButton: React.SFC<AuthButtonProps> = ({ children, handleClick }) => (
+	<Wrapper onClick={handleClick}>
 		{children}
 	</Wrapper>
 );

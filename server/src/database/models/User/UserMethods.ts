@@ -38,27 +38,32 @@ export default class UserMethods implements IUserMethod {
 			password: hash(password)
 		}).save().then(data => {
 			const UserId = data.id;
-			return User.findOne({ 
+			return User.findOne({
 				where: {
 					id: UserId
 				},
-				include: { model: models.UserProfile } as any
+				include: [{ model: models.UserProfile, attributes: ['display_name', 'thumbnail' ] }]
 			}).then(result => result);
 		});
 	}
 
 	findByEmail(email: string): any {
 		const { User } = this;
-		return User.findOne({ 
+		return User.findOne({
 			where: { email },
-			attributes: [ 'email', 'password' ],
+			attributes: [ 'email', 'password', 'id' ],
 			include: [{ model: models.UserProfile, attributes: [ 'display_name', 'thumbnail' ] }]
-		}).then(data => data);
+		}).then(data => 
+		{
+			const stringiedData = JSON.stringify(data);
+			const parsedData = JSON.parse(stringiedData);
+			return parsedData;
+		});
 	}
 
 	async findById(userId: string): Promise<any> {
 		const { User } = this;
-		return User.findOne({
+		User.findOne({
 			where: {
 				id: userId
 			},
@@ -68,7 +73,7 @@ export default class UserMethods implements IUserMethod {
 
 	checkEmail(email: string): any {
 		const { User } = this;
-		return User.findOne({ where: { email } }).then(data => data !== null);
+		return User.findOne({ where: { email }, attributes: ['email'], raw: true });
 	}
 
 	validatePassword(password: string, email: string) {
@@ -78,8 +83,10 @@ export default class UserMethods implements IUserMethod {
 			where : { email }, 
 			attributes: ['password']
 		}).then(data => {
-			const validate = data.password === hashed;
-			return validate !== null;
+			const stringiedData = JSON.stringify(data);
+			const parsedData = JSON.parse(stringiedData);
+			const parsedPassword = parsedData.password;
+			return parsedPassword === hashed ? true : false;
 		});
 	}
 

@@ -33,6 +33,7 @@
   },
   "scripts": {
     "start:dev": "cross-env NODE_PATH=src nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+		"server": "node dist/index.js"
   }
 }

@@ -6,7 +6,9 @@ const isDev = process.env.NODE_ENV === 'development';
 
 const devTools = isDev && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 const composeEnhancers = devTools || compose;
-const middlewares = [penderMiddleware()];
+const middlewares = [
+	penderMiddleware()
+];
 
 const configureStore = (preloadedState?: any) => createStore(
 	rootReducer, 

@@ -11,13 +11,15 @@ export interface IPayload {
 	};
 }
 
-export const generate = (payload: IPayload, options: string): Promise<string> => {
+export const generate = (payload: IPayload, options: any): Promise<string> => {
 	return new Promise((resolve, reject) => {
 		Jwt.sign(
 			payload,
 			JWT_SECRET,
 			{
-				expiresIn: '7d'
+				expiresIn: '7d',
+				issuer: 'zellse',
+				subject: options
 			}, (error: Jwt.JsonWebTokenError, token: string): void => {
 				if(error) reject(error);
 				resolve(token);
@@ -52,7 +54,6 @@ export const jwtMiddleware = async(ctx: Context, next: () => Promise<any>) => {
 			});
 		}
 
-		// console.log(`user set ${JSON.stringify(decoded)}`);
 		ctx.user = decoded;
 
 	} catch(e) {

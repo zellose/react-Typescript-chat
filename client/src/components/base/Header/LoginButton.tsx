@@ -26,7 +26,12 @@ const BorderedButton = styled(Link)`
 		transform: translateY(3px);
 	}
 `;
-const LoginButton: React.SFC = () => (
+
+interface LoginButtonProps{
+	children?: React.ReactNode;
+}
+
+const LoginButton: React.SFC<LoginButtonProps> = () => (
 	<BorderedButton to='/auth/login'>
 		로그인 / 가입
 	</BorderedButton>

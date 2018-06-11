@@ -23,7 +23,8 @@ export default class UserProfileMethods implements IUserProfile {
 		return UserProfile.findOne({
 			where: { 
 				display_name
-			}
-		}).then(data => data !== null);
+			},
+			attributes: [ 'display_name' ]
+		}).then(data => data);
 	}
 }

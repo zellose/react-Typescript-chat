@@ -20,11 +20,22 @@ export default (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) 
 	const attributes: SequelizeAttributes<UserAttributes> = {
 		id: primaryUUID,
 		fk_userProfile_id: DataTypes.UUID,
-		email: { type: DataTypes.STRING },
+		email: { 
+			type: DataTypes.STRING,
+		 	unique: true 
+		},
 		password: { type: DataTypes.STRING }
 	};
 
-	const User = sequelize.define<UserInstance, UserAttributes>('User', attributes);
+	const User = sequelize.define<UserInstance, UserAttributes>('User', attributes,
+		{
+			indexes: [
+				{
+					fields: ['fk_userProfile_id', 'id']
+				}
+			]
+		}
+	);
 	
 	User.associate = (models: any) => {
 		User.belongsTo(models.UserProfile, { foreignKey: 'fk_userProfile_id', onDelete: 'CASCADE', onUpdate: 'CASCADE' }); 

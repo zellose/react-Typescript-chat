@@ -9,7 +9,6 @@ const UserProfile = new UserProfileMethods();
 export default class AuthCtrl {
 
 	async localRegister(ctx: Context) {
-
 		interface BodySchema {
 			email: string;
 			password: string;
@@ -51,11 +50,10 @@ export default class AuthCtrl {
 
 			const userProfileId = await UserProfile.register(display_name); // ok
 			const user = await User.register({ email, password, userProfileId });
-
-			const token = await User.generateToken(user.id, user.UserProfile);
-			
+			const token = await User.generateToken(user.id, user.UserProfile.dataValues);
 			ctx.cookies.set('access_token', token, { httpOnly: true, maxAge: 1000 * 60 * 24 * 7 });
-			ctx.body = user.UserProfile;
+			
+			ctx.body = user.UserProfile.dataValues;
 		} catch(e) {
 			console.log(500, e);
 		}
@@ -83,19 +81,16 @@ export default class AuthCtrl {
 			const { email, password }: BodySchema = ctx.request.body;
 			const existsEmail = await User.checkEmail(email);
 			const validatePassword = await User.validatePassword(password, email);
-
 			if(!existsEmail || !validatePassword) {
 				ctx.status = 403;
 				return;
 			}
 
 			const account = await User.findByEmail(email);
-
-			const token = await User.generateToken(account.id, account);
+			const token = await User.generateToken(account.id, account.UserProfile);
 
 			ctx.cookies.set('access_token', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 60 * 24 * 7 });
-			ctx.body = account;
-
+			ctx.body = account.UserProfile;
 		} catch(e) {
 			console.log(500, e);
 		}
@@ -103,8 +98,10 @@ export default class AuthCtrl {
 
 	async exists(ctx: Context) {
 		const { key, value } = ctx.params;
+
 		try {
 			const exists = await (key === 'email' ? User.checkEmail(value) : UserProfile.checkDisplayname(value));
+			
 			ctx.body = {
 				exists: exists !== null
 			};
@@ -128,7 +125,6 @@ export default class AuthCtrl {
 			ctx.status = 403; // Forbidden
 			return;
 		}
-		
 		ctx.body = user.profile;
 
 	}

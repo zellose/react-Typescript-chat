@@ -6,7 +6,7 @@ import { hot } from 'react-hot-loader';
 import App from 'components/App';
 import store from 'store';
 
-const Root: React.SFC<{}> = () => (
+const Root: React.SFC = () => (
 	<Provider store={store}>
 		<BrowserRouter>
 			<App />
