@@ -19,7 +19,7 @@ export class AuthRouter {
 		auth.post('/login/local', authCtrl.localLogin);
 		auth.get('/exists/:key(email|username)/:value', authCtrl.exists);
 		auth.get('/check', authCtrl.check);
-		auth.post('/logout');
+		auth.post('/logout', authCtrl.logout);
 	}
 }
 

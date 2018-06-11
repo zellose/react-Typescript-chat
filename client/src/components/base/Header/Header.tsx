@@ -24,6 +24,7 @@ const WhiteBackground = styled.div`
 
 // 해더의 내용
 const HeaderContents = styled.div`
+		position: relative;
     width: 1200px;
     height: 53px;
     display: flex;
@@ -62,7 +63,7 @@ const GradientBorder = styled.div`
 `;
 
 interface HeaderProps {
-	children: React.ReactChild;
+	children: React.ReactNode;
 }
 
 const Header: React.SFC<HeaderProps> = ({ children }) => (

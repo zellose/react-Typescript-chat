@@ -48,9 +48,9 @@ class App extends React.Component<AppProps> {
 
 		try {
 			await UserActions.setLoggedInfo(loggedInfo);
-			await UserActions.checkStatus();
-
+			await UserActions.loggedSet(true);
 		} catch (e) {
+			UserActions.loggedSet(false);
 			storage.remove('loggedInfo');
 			window.location.href = '/auth/login?expired';
 		}

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import * as queryString from 'query-string';
 import { Location, History } from 'history';
 
 import { authActions } from 'store/modules/auth';
@@ -9,6 +10,7 @@ import { userActions } from 'store/modules/user';
 
 import storage from 'lib/common/storage';
 import { State } from 'store/modules/index';
+
 import { 
 	AuthContent, 
 	AuthWrapper,
@@ -22,9 +24,7 @@ interface MatchParams {
 	name: string;
 }
 
-interface RouterProps extends RouteComponentProps<MatchParams> {
-
-}
+interface RouterProps extends RouteComponentProps<MatchParams> {}
 
 // from typings
 export interface RouteComponentProps<P> {
@@ -93,6 +93,15 @@ class LoginContainer extends React.Component<LoginContainerProps> {
 	public componentWillUnmount() {
 		const { AuthActions } = this.props;
 		AuthActions.initialState();
+	}
+
+	public componentDidMount() {
+		const { setError } = this;
+		const { location } = this.props;
+		const query = queryString.parse(location.search);
+		if(query.expired !== undefined) {
+			setError('세션이 만료되었습니다. 다시 로그인 해주세요');
+		}
 	}
 
 	public render() {
