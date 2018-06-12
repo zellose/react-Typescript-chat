@@ -40,36 +40,28 @@ const operatorsAliases = {
 	$col: Op.col
 };
 
-import { 
-	User,
-	UserProfile 
-} from './models';
-
 export const sequelize = new Sequelize('reactchat', 'postgres', POSTGRELS_PW!, {
 	dialect: 'postgres',
 	logging: false,
-	operatorsAliases,
-	define: {
-		
-	}
+	port: 5432,
+	operatorsAliases
 });
 
-interface IModelSchema {
-	UserProfile: any;
-	User: any;
-}
-
-const ModelSchema = {
+import { 
+	User,
 	UserProfile,
-	User
-};
+	Comment,
+	Post
+} from './models';
 
-function createDB (ModelSchema: IModelSchema) {
+function createDB () {
 	const db = {
 		Sequelize,
 		sequelize,
 		User: User(sequelize, Sequelize),
-		UserProfile: UserProfile(sequelize, Sequelize)
+		UserProfile: UserProfile(sequelize, Sequelize),
+		Post: Post(sequelize, Sequelize),
+		Comment: Comment(sequelize, Sequelize)
 	};
 	
 	Object.values(db).forEach((model: any) => {
@@ -77,9 +69,10 @@ function createDB (ModelSchema: IModelSchema) {
 			model.associate(db);
 		}
 	});
+	
 	return db;
 }
 
-const models = createDB(ModelSchema);
+const models = createDB();
 
 export default models;

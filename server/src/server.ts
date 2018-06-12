@@ -6,9 +6,6 @@ import { sequelize } from 'database';
 import { jwtMiddleware } from 'lib/token';
 import sync from 'database/sync';
 
-const app = new Koa();
-const router = new Router();
-
 import api from 'router';
 
 export default class Server {
@@ -19,8 +16,8 @@ export default class Server {
 		this.app = new Koa();
 		this.router = new Router();
 		this.initializeDB();
-		this.routes();
 		this.middleware();
+		this.routes();
 	}
 
 	initializeDB(): void {
@@ -50,7 +47,7 @@ export default class Server {
 	}
 
 	routes(): void {
-		const { app, router } = this;
+		const { router } = this;
 		router.use('/api', api.routes());
 	}
 }

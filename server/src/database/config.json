@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "Yk1642qq!!",
+    "database": "reactchat",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "Yk1642qq!!",
+    "database": "reactchat",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "Yk1642qq!!",
+    "database": "reactchat",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

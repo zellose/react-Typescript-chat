@@ -12,6 +12,7 @@ const Wrapper = styled.div`
     color: ${oc.gray[9]};
     font-weight: 500;
     font-size: 0.9rem;
+		user-select: none;
 `;
 
 interface UsernameProps {

@@ -1,9 +1,7 @@
 import models from 'database';
 import * as crypto from 'crypto';
-import * as Sequelize from 'sequelize';
 
-import { IPayload, generate } from 'lib/token';
-import UserProfile from '../UserProfile';
+import { generate } from 'lib/token';
 
 const {
 	PASSWORD_SALT: secret_key
@@ -63,12 +61,24 @@ export default class UserMethods implements IUserMethod {
 
 	async findById(userId: string): Promise<any> {
 		const { User } = this;
-		User.findOne({
+		return User.findOne({
 			where: {
 				id: userId
 			},
-			include: { model: models.UserProfile } as any
-		}).then(data => data);
+			include: [{ model: models.UserProfile }],
+			raw: true
+		});
+	}
+
+	findUserCount(userId: string) {
+		const { User } = this;
+		return User.findOne({
+			where: {
+				id: userId
+			},
+			attributes: ['thoughtCount'],
+			raw: true
+		});
 	}
 
 	checkEmail(email: string): any {
@@ -81,12 +91,11 @@ export default class UserMethods implements IUserMethod {
 		const hashed = hash(password);
 		return User.findOne({ 
 			where : { email }, 
-			attributes: ['password']
-		}).then(data => {
-			const stringiedData = JSON.stringify(data);
-			const parsedData = JSON.parse(stringiedData);
-			const parsedPassword = parsedData.password;
-			return parsedPassword === hashed ? true : false;
+			attributes: ['password'],
+			raw: true
+		}).then( data => {
+			const result = data.password === hashed ? true : false;
+			return result;
 		});
 	}
 
@@ -97,5 +106,19 @@ export default class UserMethods implements IUserMethod {
 		};
 
 		return generate(payload, 'account');
+	}
+
+	increseThoughtCount(userId: string) {
+		const { User } = this;
+		
+		User.findOne({ 
+			where: {
+				id: userId
+			},
+		}).then((data => 
+		{
+			return data.update({ thoughtCount: data.thoughtCount + 1 });
+		}
+		));
 	}
 }

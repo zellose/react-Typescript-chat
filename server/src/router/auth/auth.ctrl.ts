@@ -9,6 +9,7 @@ const UserProfile = new UserProfileMethods();
 export default class AuthCtrl {
 
 	async localRegister(ctx: Context) {
+		
 		interface BodySchema {
 			email: string;
 			password: string;

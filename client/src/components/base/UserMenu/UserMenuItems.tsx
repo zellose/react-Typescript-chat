@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import oc from 'open-color';
 
 const MenuItem = styled.div`
+
 	& + & {
 			border-top: 1px solid ${oc.gray[3]};
 	}
